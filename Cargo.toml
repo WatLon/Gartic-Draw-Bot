@@ -1,0 +1,14 @@
+[package]
+name = "ImageDrawingBot"
+version = "0.1.0"
+edition = "2024"
+author = "WaTLon"
+
+[dependencies]
+druid = {"version" = "*", features = ["image", "jpeg", "png"]}
+enigo = "*"
+rfd = "*"
+
+[target.x86_64-pc-windows-gnu]
+linker = "/usr/bin/x86_64-w64-mingw32-gcc"
+ar = "/usr/bin/x86_64-w64-mingw32-ar"

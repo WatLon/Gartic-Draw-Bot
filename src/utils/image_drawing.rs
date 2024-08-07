@@ -52,9 +52,15 @@ impl DrawingBot {
             self.extract_lines_to_draw(false, pixels_interval);
 
         if nb_vertical_lines > nb_horizontal_lines {
-            draw_horizontally_lines
+            let mut vec: Vec<(Rgb<u8>, Vec<((f64, f64), (f64, f64))>)> =
+                draw_horizontally_lines.into_iter().collect();
+            vec.sort_by(|a, b| b.1.len().cmp(&a.1.len()));
+            HashMap::from_iter(vec.into_iter())
         } else {
-            draw_vertically_lines
+            let mut vec: Vec<(Rgb<u8>, Vec<((f64, f64), (f64, f64))>)> =
+                draw_vertically_lines.into_iter().collect();
+            vec.sort_by(|a, b| b.1.len().cmp(&a.1.len()));
+            HashMap::from_iter(vec.into_iter())
         }
     }
 
@@ -188,8 +194,9 @@ impl DrawingBot {
             }
         });
     }
+
     fn draw(&mut self) {
-        let _ = &self.stop_drawing();
+        &self.stop_drawing();
         for (color, lines) in self.pixels_lines_to_draw.clone() {
             if color != Rgb([255, 255, 255]) {
                 self.change_color(color);
@@ -198,7 +205,7 @@ impl DrawingBot {
                         break;
                     }
                     self.draw_line(line);
-                    thread::sleep(time::Duration::from_millis(10))
+                    thread::sleep(time::Duration::from_millis(5))
                 }
             }
         }

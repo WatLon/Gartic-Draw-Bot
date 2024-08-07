@@ -26,20 +26,20 @@ pub fn build_root_widget() -> impl Widget<AppState> {
         |_ctx, data, _env| match data.view_status {
             ViewStatus::Default => Box::new(
                 Flex::column()
-                    .with_child(Button::new("Choose area").on_click(
+                    .with_child(Button::new("Select area").on_click(
                         |ctx, data: &mut AppState, _env| {
                             // ctx.window().set_size((1920.0, 1080.0));
                             data.get_area(ctx);
                         },
                     ))
                     .with_spacer(10.0)
-                    .with_child(Button::new("Choose Image").on_click(
+                    .with_child(Button::new("Load Image").on_click(
                         |_ctx, data: &mut AppState, _env| {
                             data.save_image(_ctx, &data.clone(), _env);
                         },
                     ))
                     .with_spacer(10.0)
-                    .with_child(Button::new("Choose palette").on_click(
+                    .with_child(Button::new("Select palette").on_click(
                         |ctx, data: &mut AppState, _env| {
                             data.get_palette(ctx);
                         },
@@ -51,7 +51,7 @@ pub fn build_root_widget() -> impl Widget<AppState> {
                         },
                     ))
                     .with_spacer(10.0)
-                    .with_child(Checkbox::new("Dithering").lens(AppState::dithering))
+                    .with_child(Checkbox::new("Dither").lens(AppState::dithering))
                     .with_spacer(10.0)
                     .with_child(Label::new(|data: &AppState, _env: &Env| {
                         format!("Pixel interval: {}", data.pixel_interval)

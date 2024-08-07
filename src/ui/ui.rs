@@ -28,6 +28,7 @@ pub fn build_root_widget() -> impl Widget<AppState> {
                 Flex::column()
                     .with_child(Button::new("Choose area").on_click(
                         |ctx, data: &mut AppState, _env| {
+                            // ctx.window().set_size((1920.0, 1080.0));
                             data.get_area(ctx);
                         },
                     ))

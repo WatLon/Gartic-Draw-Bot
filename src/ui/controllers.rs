@@ -30,7 +30,7 @@ impl<W: Widget<AppState>> Controller<AppState, W> for PainterController {
                 Event::MouseDown(me) => {
                     if me.buttons.has_right() {
                         data.view_status = ViewStatus::Default;
-                        data.switch_view_to_default(ctx);
+                        data.switch_view_to_default(ctx.window());
                         return;
                     }
                     ctx.set_active(true);
@@ -50,7 +50,7 @@ impl<W: Widget<AppState>> Controller<AppState, W> for PainterController {
                 Event::MouseDown(me) => {
                     if me.buttons.has_right() || data.colors_pos.len() >= 18 {
                         data.view_status = ViewStatus::Default;
-                        data.switch_view_to_default(ctx);
+                        data.switch_view_to_default(ctx.window());
                         save_colors_pos("colors_pos.txt", &data.colors_pos).unwrap();
                         return;
                     }

@@ -6,5 +6,5 @@ author = "WaTLon"
 
 [dependencies]
 druid = {"version" = "*", features = ["image", "jpeg", "png"]}
-enigo = "*"
 rfd = "*"
+rdev = "0.5.3"

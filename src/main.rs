@@ -9,7 +9,7 @@ use druid::image::{open, ImageBuffer, Rgb};
 use druid::widget::{Container, Image};
 use druid::{
     AppLauncher, Data, Env, EventCtx, ImageBuf, Lens, LocalizedString, Rect, Screen, Size,
-    WidgetExt, WindowConfig, WindowDesc, WindowId,
+    WidgetExt, WindowConfig, WindowDesc, WindowHandle, WindowId,
 };
 
 use rfd::FileDialog;
@@ -110,38 +110,30 @@ impl AppState {
         );
     }
 
-    fn switch_view_to_overlay(&self, ctx: &mut EventCtx) {
-        let window = ctx.window();
-
+    fn switch_view_to_overlay(&self, window: &WindowHandle) {
         let display_rect = Screen::get_display_rect();
         let display_size = display_rect.size();
 
-        window.show_titlebar(false);
-        window.set_position(display_rect.origin());
-        window.set_size(display_size);
-        window.set_size(display_size);
         window.set_size(display_size);
         window.set_always_on_top(true);
-        window.resizable(false);
+        window.show_titlebar(false);
+        window.set_position(display_rect.origin());
     }
 
-    fn switch_view_to_default(&self, ctx: &mut EventCtx) {
-        let window = ctx.window();
-
+    fn switch_view_to_default(&self, window: &WindowHandle) {
         window.set_always_on_top(false);
         window.show_titlebar(true);
         window.set_size((300.0, 300.0));
-        window.resizable(true);
         window.set_position(Screen::get_display_rect().center());
     }
 
     fn get_area(&mut self, ctx: &mut EventCtx) {
-        self.switch_view_to_overlay(ctx);
+        self.switch_view_to_overlay(ctx.window());
         self.view_status = ViewStatus::Area;
     }
 
     fn get_palette(&mut self, ctx: &mut EventCtx) {
-        self.switch_view_to_overlay(ctx);
+        self.switch_view_to_overlay(ctx.window());
         self.colors_pos = Vec::with_capacity(18);
         self.view_status = ViewStatus::Palette;
     }
@@ -152,7 +144,7 @@ impl AppState {
             .clone()
             .into_iter()
             .zip(self.colors_pos.clone().into_iter())
-            .map(|(color, (x, y))| (color, (x as u32, y as u32)))
+            // .map(|(color, (x, y))| (color, (x as u32, y as u32)))
             .collect();
 
         draw_image(

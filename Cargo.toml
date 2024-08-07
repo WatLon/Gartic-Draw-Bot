@@ -1,0 +1,10 @@
+[package]
+name = "ImageDrawingBot"
+version = "0.1.0"
+edition = "2021"
+author = "WaTLon"
+
+[dependencies]
+druid = {"version" = "*", features = ["image", "jpeg", "png"]}
+enigo = "*"
+rfd = "*"
